@@ -1,20 +1,27 @@
 <template>
   <q-page>
     <mini-player></mini-player>
-    <h1>{{text}}</h1>
-    
+    <song-item></song-item>
+    <h1>{{ text }}</h1>
+
   </q-page>
 </template>
 
 <script>
-import MiniPlayer from '../components/MiniPlayer'
+import MiniPlayer from "../components/MiniPlayer";
+import SongItem from "../components/SongItem"
 export default {
   name: "PageIndex",
-  components: {MiniPlayer},
+  components: { MiniPlayer, SongItem },
   data() {
     return {
-      text: "Hello"
+      text: "VOCANA"
     };
   }
 };
 </script>
+
+<style lang="sass">
+@import ../css/components/mixin
+
+</style>
