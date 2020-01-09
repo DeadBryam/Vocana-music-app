@@ -1,0 +1,38 @@
+{
+  "id": 563077282,
+  "readable": true,
+  "title": "Falling",
+  "title_short": "Falling",
+  "title_version": "",
+  "link": "https://www.deezer.com/track/563077282",
+  "duration": 159,
+  "rank": 977080,
+  "explicit_lyrics": false,
+  "explicit_content_lyrics": 0,
+  "explicit_content_cover": 2,
+  "preview": "https://cdns-preview-5.dzcdn.net/stream/c-5c8cf0352fd1a6669efa1b3e18c21dda-3.mp3",
+  "artist": {
+    "id": 9096522,
+    "name": "Trevor Daniel",
+    "link": "https://www.deezer.com/artist/9096522",
+    "picture": "https://api.deezer.com/artist/9096522/image",
+    "picture_small": "https://e-cdns-images.dzcdn.net/images/artist/9869729426f331b5f1525ce771296c86/56x56-000000-80-0-0.jpg",
+    "picture_medium": "https://e-cdns-images.dzcdn.net/images/artist/9869729426f331b5f1525ce771296c86/250x250-000000-80-0-0.jpg",
+    "picture_big": "https://e-cdns-images.dzcdn.net/images/artist/9869729426f331b5f1525ce771296c86/500x500-000000-80-0-0.jpg",
+    "picture_xl": "https://e-cdns-images.dzcdn.net/images/artist/9869729426f331b5f1525ce771296c86/1000x1000-000000-80-0-0.jpg",
+    "tracklist": "https://api.deezer.com/artist/9096522/top?limit=50",
+    "type": "artist"
+  },
+  "album": {
+    "id": 74660452,
+    "title": "Falling",
+    "cover": "https://api.deezer.com/album/74660452/image",
+    "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/e2a2c3f13954a6e14dee0dbca17db6e0/56x56-000000-80-0-0.jpg",
+    "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/e2a2c3f13954a6e14dee0dbca17db6e0/250x250-000000-80-0-0.jpg",
+    "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/e2a2c3f13954a6e14dee0dbca17db6e0/500x500-000000-80-0-0.jpg",
+    "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/e2a2c3f13954a6e14dee0dbca17db6e0/1000x1000-000000-80-0-0.jpg",
+    "tracklist": "https://api.deezer.com/album/74660452/tracks",
+    "type": "album"
+  },
+  "type": "track"
+}
