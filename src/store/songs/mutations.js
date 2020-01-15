@@ -28,6 +28,22 @@ export function favorite(state, song) {
   //add
 }
 
-export function playSong(state, index) {
-  state.actual = state.search.list[index];
+export function setSong(state, index) {
+  state.current.info = state.search.list[index];
+}
+
+export function songInstance(state, instance){
+  state.current.song = instance;
+}
+
+export function changeIcon(state, icon){
+  state.current.state.icon = icon;
+}
+
+export function changeTime(state, time){
+  state.current.state.time = time;
+}
+
+export function changeSongTime(state, time){
+  state.current.song.currentTime = time;
 }

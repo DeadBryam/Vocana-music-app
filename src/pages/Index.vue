@@ -1,10 +1,16 @@
 <template>
-  <div class="margin-auto container valign-center">
+  <q-page style="display: grid;" class="margin-auto container valign-center">
     <div class="text-center">
-      <div id="app-name">VOCANA</div>
-      <q-img src="/statics/imgs/diamond.png" style="width:200px" />
+      <transition-group
+      appear
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+    >
+      <div id="app-name" key="app-name">VOCANA</div>
+      <q-img src="/statics/imgs/diamond.png" style="width:200px" key="app-logo"/>
+      </transition-group>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>

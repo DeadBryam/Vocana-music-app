@@ -5,13 +5,14 @@
         <div class="col-4 col-sm-2 col-md-1 margin-auto" id="cover">
           <q-img
             id="cover-image"
-            :src="actualSong.album.cover_big"
-            class="vertical-middle shadow-3"
+            :src="currentSong.album.cover_medium"
+            class="vertical-middle shadow-0"
+            @click="changeToPlayer"
           ></q-img>
           <q-img
             id="cover-shadow"
-            :src="actualSong.album.cover_big"
-            class="vertical-middle shadow-3"
+            :src="currentSong.album.cover_small"
+            class="vertical-middle shadow-0"
           ></q-img>
         </div>
         <div class="col-8 col-sm-10 col-md-11" id="controls">
@@ -19,10 +20,10 @@
             <div class="col-6 margin-auto">
               <div class="column">
                 <div class="none player player-title">
-                  {{ actualSong.title }}
+                  {{ currentSong.title }}
                 </div>
                 <div class="none player player-author">
-                  {{ actualSong.artist.name }}
+                  {{ currentSong.artist.name }}
                 </div>
               </div>
             </div>
@@ -38,7 +39,7 @@
                 <q-btn
                   round
                   color="primary"
-                  :icon="media.icon"
+                  :icon="songState.icon"
                   class="media-button"
                   unelevated
                   @click="playSong"
@@ -55,23 +56,19 @@
             <div class="col-12" style="position: relative;">
               <q-slider
                 class="duration"
-                v-model="media.time"
+                v-model="songTime"
                 thumb-path=""
                 :dense="true"
                 color="primary"
                 :min="0"
                 :max="100"
                 :step="0.01"
-                @change="changeTime"
               />
             </div>
           </div>
         </div>
       </div>
     </q-card-section>
-    <audio id="music" ref="music">
-      <source :src="actualSong.preview" type="audio/mpeg" />
-    </audio>
   </q-card>
 </template>
 
@@ -79,50 +76,41 @@
 import { Platform } from "quasar";
 export default {
   name: "MiniPlayer",
-  data() {
-    return {
-      song: null,
-      media: {
-        icon: "pause",
-        time: 0
-      }
-    };
-  },
   methods: {
     playSong() {
-      this.media.icon = this.song.paused ? "pause" : "play_arrow";
-      this.song.paused ? this.song.play() : this.song.pause();
+      this.songInstance.paused
+        ? this.songInstance.play()
+        : this.songInstance.pause();
     },
-    changeTime(time) {
-      this.song.currentTime = (time / 100) * this.song.duration;
+    changeToPlayer() {
+      this.$router.push("/player");
     }
   },
-  mounted: function() {
-    this.song = this.$refs.music;
-
-    this.song.ontimeupdate = () => {
-      this.media.time = (this.song.currentTime / this.song.duration) * 100;
-    };
-
-    this.song.onended = () => {
-      this.media.icon = "play_arrow";
-      this.media.time = 0;
-    };
-    this.song.play();
-  },
   computed: {
-    actualSong: {
-      get: function() {
-        return this.$store.state.songs.actual;
+    currentSong() {
+      return this.$store.state.songs.current.info;
+    },
+    songInstance() {
+      return this.$store.state.songs.current.song;
+    },
+    songState() {
+      return this.$store.state.songs.current.state;
+    },
+    songTime: {
+      get() {
+        return this.songState.time;
+      },
+      set(time) {
+        this.$store.commit(
+          "songs/changeSongTime",
+          (time / 100) * this.songInstance.duration
+        );
       }
     }
   },
   watch: {
-    actualSong(newValue, oldValue) {
-      this.song.load();
-      this.media.icon = "pause";
-      this.media.time = 0;
-      this.song.play();
+    currentSong(newValue, oldValue) {
+      this.$store.commit("songs/changeTime", 0);
     }
   }
 };
@@ -133,15 +121,15 @@ export default {
 #cover
   position: relative
 #cover-shadow
-  filter: blur(30px)
-  width: 56%
+  filter: blur(32.6194px)
+  width: 50%
   position: absolute
-  left: 15px
-  top: 20px
+  left: 15%
+  top: 15%
   z-index: 0
 #cover-image
   width: 70%
-  border-radius: 10px
+  border-radius: 8px
   z-index: 1
 .margin-auto
   margin: auto
@@ -161,6 +149,10 @@ export default {
   width: 90%
 .player-author
   color: $song-author
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+  width: 90%
 .media-button-handler
   float: right
   button

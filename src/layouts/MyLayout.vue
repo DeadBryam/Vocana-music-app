@@ -1,19 +1,36 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-header>
-        <search-bar/>
+      <q-header v-if="fullscreenPlayer">
+        <search-bar />
       </q-header>
 
-      <q-page style="display: grid;">
-        <router-view />
-      </q-page>
+      <transition-group
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutDown"
+      >
+        <router-view key="page" />
+      </transition-group>
 
-      <q-footer>
-        <mini-player v-if="showMiniPlayer" />
+      <q-footer v-if="fullscreenPlayer">
+        <transition-group
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutDown"
+      >
+        <mini-player key="mini-player" v-if="showMiniPlayer" />
+        </transition-group>
       </q-footer>
     </q-page-container>
+
+    <!-- Audio tag -->
+    <audio id="music" ref="player">
+      <source
+        :src="currentSong === null ? '' : currentSong.preview"
+        type="audio/mpeg"
+      />
+    </audio>
   </q-layout>
+  <!-- :src="currentSong === null ? '' : currentSong.preview" -->
 </template>
 
 <script>
@@ -30,7 +47,48 @@ export default {
   },
   computed: {
     showMiniPlayer() {
-      return this.$store.state.songs.actual !== null;
+      return this.currentSong !== null;
+    },
+    fullscreenPlayer() {
+      return this.$route.path === "/player" ? false : true;
+    },
+    currentSong() {
+      return this.$store.state.songs.current.info;
+    },
+    songInstance() {
+      return this.$store.state.songs.current.song;
+    },
+    songState() {
+      return this.$store.state.songs.current.state;
+    }
+  },
+  mounted() {
+    this.$store.commit("songs/songInstance", this.$refs.player);
+
+    this.songInstance.ontimeupdate = () => {
+      this.$store.commit(
+        "songs/changeTime",
+        (this.songInstance.currentTime / this.songInstance.duration) * 100
+      );
+    };
+
+    this.songInstance.onended = () => {
+      this.$store.commit("songs/changeTime", 0);
+      this.$store.commit("songs/changeIcon", "play_arrow");
+    };
+
+    this.songInstance.onpause = () => {
+      this.$store.commit("songs/changeIcon", "r_play_arrow");
+    };
+
+    this.songInstance.onplay = () => {
+      this.$store.commit("songs/changeIcon", "r_pause");
+    };
+  },
+  watch: {
+    currentSong() {
+      this.songInstance.load();
+      this.songInstance.play();
     }
   }
 };

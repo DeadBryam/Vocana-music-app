@@ -1,19 +1,20 @@
 <template>
-  <div class="margin-auto container short">
-    <div class="fit column wrap justify-center">
-      <div class="col-1 song-list-title">Result</div>
+  <q-page style="display: grid;">
+    <div class="margin-auto container short">
+      <div class="song-list-title">Result</div>
+      <!-- <div class="fit column wrap justify-center"> -->
       <div
-        class="col-11 text-center song-container"
+        class="text-center song-container"
         :style="{ 'max-height': computedHeight }"
       >
-        <q-list separator>
+        <q-list >
           <q-item
             clickable
             v-ripple
             class="song-item"
             v-for="(song, index) in songList"
             v-bind:key="index"
-            @click="playSong(index)"
+            @click="setSong(index)"
           >
             <q-item-section avatar>
               <q-img
@@ -45,8 +46,9 @@
           </q-item>
         </q-list>
       </div>
+      <!-- </div> -->
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -55,8 +57,8 @@ export default {
     return {};
   },
   methods: {
-    playSong(index) {
-      this.$store.commit("songs/playSong", index);
+    setSong(index) {
+      this.$store.commit("songs/setSong", index);
     }
   },
   computed: {
@@ -64,10 +66,10 @@ export default {
       return this.$store.state.songs.search.list;
     },
     computedHeight() {
-      if (this.$store.state.songs.actual !== null) {
+      if (this.$store.state.songs.current.info !== null) {
         return "70vh";
       }
-      return "90vh";
+      return "80vh";
     }
   }
 };
@@ -80,6 +82,9 @@ export default {
   font: 24px Poppins
   font-weight: 600
   color: $font-color
+  height: 55px
+  display: table-cell
+  vertical-align: middle
 .song-item
   padding: 8px 1px
   font-family: 'Poppins'

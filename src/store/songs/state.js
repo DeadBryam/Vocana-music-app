@@ -1,6 +1,12 @@
 export default function() {
   return {
-    actual: null,
+    current: {
+      info: null,
+      state: {
+        icon: "pause",
+        time: 0
+      }
+    },
     search: {
       query: "",
       list: []

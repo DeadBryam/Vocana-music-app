@@ -10,7 +10,13 @@
     placeholder="Search"
     input-class="search__input"
     class="search-bar"
-    :class="{ bolder: searchBar.icon !== 'search' }"
+    :rounded="searchBar.presentationMode"
+    :outlined="searchBar.presentationMode"
+    :class="{
+      bolder: searchBar.icon !== 'search',
+      'search-mode': currentRoute === '/',
+      'presentation-mode': searchBar.presentationMode && currentRoute === '/'
+    }"
   >
     <template v-slot:prepend>
       <q-icon :name="searchBar.icon" @click="clear"></q-icon>
@@ -24,7 +30,7 @@ export default {
   data() {
     return {
       searchBar: {
-        presentationMode: true,
+        presentationMode: false,
         icon: "search"
       }
     };
@@ -35,9 +41,15 @@ export default {
     },
     focusSearchBar() {
       this.searchBar.icon = "r_clear";
+      if (this.currentRoute === "/") {
+        this.searchBar.presentationMode = false;
+      }
     },
     blurSearchBar() {
       this.searchBar.icon = "search";
+      if (this.currentRoute === "/") {
+        this.searchBar.presentationMode = true;
+      }
     },
     searchSongs() {
       this.$q.loading.show({ delay: 400 });
@@ -67,6 +79,18 @@ export default {
   watch: {
     songList(oldList, newList) {
       this.$q.loading.hide();
+    },
+    currentRoute(now, old) {
+      if (now === "/") {
+        this.searchBar.presentationMode = true;
+      } else {
+        this.searchBar.presentationMode = false;
+      }
+    }
+  },
+  mounted(){
+    if(this.currentRoute === "/"){
+      this.searchBar.presentationMode = true;
     }
   }
 };
@@ -74,21 +98,6 @@ export default {
 
 <style lang="sass" scoped>
 @import ../css/components/mixin
-.search-bars
-  position: absolute
-  left: 10vw
-  top: 15vh
-  width: 80vw
-  transition: all 0.2s ease-out
-  z-index: 100
-.search-bars.search-mode
-  top: 0
-  left: 0
-  width: 100vw
-  div>div
-    &::before
-      border: none !important
-
 .bolder
   div>div>div>i
     font-weight: bold
@@ -98,10 +107,28 @@ export default {
     padding-left: 10px
     font-size: 30px
     color: $font-color
+
+.search-mode.presentation-mode
+  top: 15vh
+  width: 80vw
+  left: 10vw
+
+.search-mode
+  position: absolute
+  top: 0
+  width: 100vw
+  left: 0
+  transition: all 0.2s ease-out
+  z-index: 100
 </style>
 
 <style lang="sass">
 .search__input
   font: bold 20px Poppins
   color: $font-color
+.presentation-mode
+  div>div
+    border-radius: 22px !important
+    &::before
+      border: none !important
 </style>
