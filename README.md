@@ -11,12 +11,23 @@ npm install
 ```bash
 quasar dev
 ```
-
+### Start the app in development mode for mobile
+```bash
+quasar dev -m [android|ios]
+```
 
 ### Build the app for production
 ```bash
 quasar build
 ```
+### Build the app for production mobile
+```bash
+quasar build -m [android|ios]
+```
 
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+### Use
+Create an .env file in the root path with the environment variables
+  - X-RapidAPI-Host
+  - X-RapidAPI-Key
+  
+Use Dezzer API in https://rapidapi.com/
