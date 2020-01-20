@@ -1,4 +1,4 @@
-# Vocana (vocana-app)
+# Vocana (music-app)
 
 It is a simple music application, which shows previews of songs.
 
