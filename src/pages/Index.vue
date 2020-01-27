@@ -7,7 +7,7 @@
       leave-active-class="animated fadeOut"
     >
       <div id="app-name" key="app-name">VOCANA</div>
-      <q-img src="/statics/imgs/diamond.png" style="width:200px" key="app-logo"/>
+      <q-img src="statics/imgs/diamond.png" style="width:200px" key="app-logo"/>
       </transition-group>
     </div>
   </q-page>

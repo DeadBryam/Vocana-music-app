@@ -27,7 +27,7 @@ quasar build -m [android|ios]
 
 ### Use
 Create an .env file in the root path with the environment variables
-  - X-RapidAPI-Host
-  - X-RapidAPI-Key
+  - BASE_URL
+  - API_KEY
   
 Use Dezzer API in https://rapidapi.com/
